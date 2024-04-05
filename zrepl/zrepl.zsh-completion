@@ -1,0 +1,54 @@
+#compdef zrepl
+
+_arguments \
+  '1: :->level1' \
+  '2: :->level2' \
+  '3: :->level3' \
+  '4: :_files'
+case $state in
+  level1)
+    case $words[1] in
+      zrepl)
+        _arguments '1: :(configcheck daemon gencompletion help migrate pprof signal status stdinserver test version zfs-abstraction)'
+      ;;
+      *)
+        _arguments '*: :_files'
+      ;;
+    esac
+  ;;
+  level2)
+    case $words[2] in
+      gencompletion)
+        _arguments '2: :(bash zsh)'
+      ;;
+      migrate)
+        _arguments '2: :(0.0.X:0.1:placeholder replication-cursor:v1-v2)'
+      ;;
+      pprof)
+        _arguments '2: :(activity-trace listen)'
+      ;;
+      test)
+        _arguments '2: :(decoderesumetoken filesystems placeholder)'
+      ;;
+      zfs-abstraction)
+        _arguments '2: :(create list release-all release-stale)'
+      ;;
+      *)
+        _arguments '*: :_files'
+      ;;
+    esac
+  ;;
+  level3)
+    case $words[3] in
+      create)
+        _arguments '3: :(step)'
+      ;;
+      *)
+        _arguments '*: :_files'
+      ;;
+    esac
+  ;;
+  *)
+    _arguments '*: :_files'
+  ;;
+esac
