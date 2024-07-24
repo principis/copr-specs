@@ -8,7 +8,7 @@ Version:            0.13.5
 %forgemeta
 
 Name:           python-%{srcname}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Hook and simulate keyboard events on Windows and Linux
 
 License:        MIT
@@ -55,6 +55,9 @@ Summary:        %{summary}
 %doc README.md
 
 %changelog
+* Wed Jul 24 2024 Arthur Bols <copr@bols.dev> - 0.13.5-3
+- Rebuilt for Python 3.13
+
 * Tue Apr 09 2024 Arthur Bols <copr@bols.dev> - 0.13.5-2
 - Rebuilt for Fedora 40
 

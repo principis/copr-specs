@@ -6,7 +6,7 @@ Version:            0.1.3
 %forgemeta
 
 Name:           python-%{srcname}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python library for requesting root privileges
 
 License:        MIT
@@ -52,6 +52,9 @@ Summary:        %{summary}
 %doc README.rst
 
 %changelog
+* Wed Jul 24 2024 Arthur Bols <copr@bols.dev> - 0.1.3-3
+- Rebuilt for Python 3.13
+
 * Tue Apr 09 2024 Arthur Bols <copr@bols.dev> - 0.1.3-2
 - Rebuilt for Fedora 40
 

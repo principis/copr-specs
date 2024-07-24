@@ -6,7 +6,7 @@ Version:            1.0.2
 %forgemeta
 
 Name:           python-%{srcname}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Python library for v4l2
 
 License:        MIT
@@ -52,6 +52,9 @@ sed -i 's/from v4l2 cimport/from pyv4l2.v4l2 cimport/' pyv4l2/frame.pyx
 %doc README.rst
 
 %changelog
+* Wed Jul 24 2024 Arthur Bols <copr@bols.dev> - 1.0.2-3
+- Rebuilt for Python 3.13
+
 * Tue Apr 09 2024 Arthur Bols <copr@bols.dev> - 1.0.2-2
 - Rebuilt for Fedora 40
 
