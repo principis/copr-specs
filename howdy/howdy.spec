@@ -2,7 +2,7 @@
 
 Name:           howdy
 Version:        2.6.1
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Windows Hello™ style authentication for Linux
 
 
@@ -34,7 +34,10 @@ camera in combination with face recognition to prove who you are.
 
 %prep
 %autosetup -p1
-%py3_shebang_fix -i %{__python3} .
+
+# Set empty to remove `-sP`
+%global py3_shebang_flags %{nil}
+%py3_shebang_fix .
 
 bzip2 -dc %{S:10} > %(f=%{basename:%{S:10}}; echo ${f%.*})
 bzip2 -dc %{S:11} > %(f=%{basename:%{S:11}}; echo ${f%.*})
@@ -85,6 +88,9 @@ install -Dm 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/profile.d/howdy.csh
 
 
 %changelog
+* Sat Jul 27 2024 Arthur Bols <arthur@bols.dev> - 2.6.1-10
+- Remove -sP flags from shebang fix
+
 * Wed Jul 24 2024 Arthur Bols <arthur@bols.dev> - 2.6.1-9
 - Rebuilt for Fedora 40
 
