@@ -1,11 +1,11 @@
 %global forgeurl    https://github.com/boltgolt/%{name}
-%global commit      aef35b526e4fef082f4bbfd6ffb5cbbc520ff629
+%global commit      d3ab99382f88f043d15f15c1450ab69433892a1c
 
 %forgemeta
 
 Name:           howdy
 Version:        3.0.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Windows Hello™ style authentication for Linux
 
 # The entire source code is GPL-3.0-or-later except:
@@ -142,6 +142,9 @@ install -Dm 0644 howdy/src/dlib-data/*.dat -t %{buildroot}%{_datadir}/%{name}/dl
 %{_datadir}/%{name}/dlib-data/*.dat
 
 %changelog
+* Thu Jun 24 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-6
+- Rebase to d3ab99382f88f043d15f15c1450ab69433892a1c
+
 * Thu Feb 20 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-5
 - Rebase to aef35b526e4fef082f4bbfd6ffb5cbbc520ff629
 
