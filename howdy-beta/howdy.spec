@@ -142,7 +142,7 @@ install -Dm 0644 howdy/src/dlib-data/*.dat -t %{buildroot}%{_datadir}/%{name}/dl
 %{_datadir}/%{name}/dlib-data/*.dat
 
 %changelog
-* Wed Jun 23 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-6
+* Tue Jun 24 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-6
 - Rebase to d3ab99382f88f043d15f15c1450ab69433892a1c
 
 * Thu Feb 20 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-5
