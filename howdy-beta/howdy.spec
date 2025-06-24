@@ -1,11 +1,11 @@
 %global forgeurl    https://github.com/boltgolt/%{name}
-%global commit      aef35b526e4fef082f4bbfd6ffb5cbbc520ff629
+%global commit      d3ab99382f88f043d15f15c1450ab69433892a1c
 
 %forgemeta
 
 Name:           howdy
 Version:        3.0.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Windows Hello™ style authentication for Linux
 
 # The entire source code is GPL-3.0-or-later except:
@@ -18,8 +18,6 @@ Source2:        howdy_profile.csh
 Source10:       https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
 Source11:       https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
 Source12:       https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
-
-Patch0:         0001-fix-polkit.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  meson
@@ -73,10 +71,6 @@ bzip2 -dc %{S:10} > howdy/src/dlib-data/%(f=%{basename:%{S:10}}; echo ${f%.*})
 bzip2 -dc %{S:11} > howdy/src/dlib-data/%(f=%{basename:%{S:11}}; echo ${f%.*})
 bzip2 -dc %{S:12} > howdy/src/dlib-data/%(f=%{basename:%{S:12}}; echo ${f%.*})
 
-# Fix python path
-sed -i 's#env python3#%{python3}#' howdy/src/bin/howdy.in
-sed -i 's#env python3#%{python3}#' howdy-gtk/bin/howdy-gtk.in
-
 # Fix perms
 chmod 0755 howdy/src/compare.py
 
@@ -88,7 +82,8 @@ sed -i "/install_data('dlib-data\/install.sh',.*/d"  howdy/src/meson.build
     -Ddlib_data_dir=%{_datadir}/%{name}/dlib-data/ \
     -Dinstall_in_site_packages=true \
     -D python.bytecompile=-1 \
-    -D with_polkit=true
+    -D with_polkit=true \
+    -D python_path=%{python3}
 %meson_build
 
 %install
@@ -142,6 +137,9 @@ install -Dm 0644 howdy/src/dlib-data/*.dat -t %{buildroot}%{_datadir}/%{name}/dl
 %{_datadir}/%{name}/dlib-data/*.dat
 
 %changelog
+* Tue Jun 24 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-6
+- Rebase to d3ab99382f88f043d15f15c1450ab69433892a1c
+
 * Thu Feb 20 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-5
 - Rebase to aef35b526e4fef082f4bbfd6ffb5cbbc520ff629
 
