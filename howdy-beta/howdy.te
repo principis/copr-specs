@@ -1,0 +1,10 @@
+module howdy 1.0;
+
+require {
+        type xdm_t;
+        type v4l_device_t;
+        class chr_file map;
+}
+
+#============= xdm_t ==============
+allow xdm_t v4l_device_t:chr_file map;
