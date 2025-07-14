@@ -19,6 +19,8 @@ Source10:       https://github.com/davisking/dlib-models/raw/master/dlib_face_re
 Source11:       https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
 Source12:       https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
 
+Patch0:         0001-remove-exists-check.patch
+
 BuildRequires:  gcc-c++
 BuildRequires:  meson
 BuildRequires:  bzip2
