@@ -5,7 +5,7 @@
 
 Name:           howdy
 Version:        3.0.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Windows Hello™ style authentication for Linux
 
 # The entire source code is GPL-3.0-or-later except:
@@ -32,7 +32,6 @@ BuildRequires:  pkgconfig(pam)
 
 Requires:       hicolor-icon-theme
 Requires:       python3dist(dlib)
-Requires:       python3dist(ffmpeg-python)
 Requires:       python3dist(keyboard)
 Requires:       python3dist(numpy)
 Requires:       python3dist(opencv)
@@ -139,6 +138,9 @@ install -Dm 0644 howdy/src/dlib-data/*.dat -t %{buildroot}%{_datadir}/%{name}/dl
 %{_datadir}/%{name}/dlib-data/*.dat
 
 %changelog
+* Wed Jul 16 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-7
+- Small packaging fixes.
+
 * Tue Jun 24 2025 Alex Shek <hms.starryfish@gmail.com> - 3.0.0-6
 - Rebase to d3ab99382f88f043d15f15c1450ab69433892a1c
 
