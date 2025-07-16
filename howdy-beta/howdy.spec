@@ -32,7 +32,6 @@ BuildRequires:  pkgconfig(pam)
 
 Requires:       hicolor-icon-theme
 Requires:       python3dist(dlib)
-Requires:       python3dist(ffmpeg-python)
 Requires:       python3dist(keyboard)
 Requires:       python3dist(numpy)
 Requires:       python3dist(opencv)
