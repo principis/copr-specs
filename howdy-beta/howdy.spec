@@ -15,6 +15,7 @@ URL:            %{forgeurl}
 Source0:        %{forgesource}
 Source1:        howdy_profile.sh
 Source2:        howdy_profile.csh
+Source3:        howdy.te
 Source10:       https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2
 Source11:       https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
 Source12:       https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
@@ -25,6 +26,8 @@ BuildRequires:  gcc-c++
 BuildRequires:  meson
 BuildRequires:  bzip2
 BuildRequires:  python3-devel
+BuildRequires:  selinux-policy
+BuildRequires:  policycoreutils-devel
 
 BuildRequires:  pkgconfig(INIReader)
 BuildRequires:  pkgconfig(libevdev)
@@ -78,6 +81,11 @@ chmod 0755 howdy/src/compare.py
 # Disable downloading dlib-data files
 sed -i "/install_data('dlib-data\/install.sh',.*/d"  howdy/src/meson.build
 
+# Compile SELinux policy module
+cp %{S:3} howdy.te
+checkmodule -M -m -o howdy.mod howdy.te
+semodule_package -o howdy.pp -m howdy.mod
+
 %build
 %meson \
     -Ddlib_data_dir=%{_datadir}/%{name}/dlib-data/ \
@@ -108,6 +116,28 @@ mkdir -p   %{buildroot}%{_sysconfdir}/%{name}/models/
 # install dlib-data files
 install -Dm 0644 howdy/src/dlib-data/*.dat -t %{buildroot}%{_datadir}/%{name}/dlib-data/
 
+# install the SELinux policy
+install -Dm 0644 howdy.pp %{buildroot}%{_datadir}/selinux/targeted/contexts/files/howdy.pp
+
+%post
+# Install SELinux module
+if command -v sestatus >/dev/null 2>&1 && sestatus | grep -q 'SELinux status:.*enabled'; then
+    # Check if the SELinux module is already installed
+    if ! semodule -l | grep -q howdy; then
+        # Load the SELinux policy module if it's not already loaded
+        semodule -i %{_datadir}/selinux/targeted/contexts/files/howdy.pp
+    fi
+fi
+
+%postun
+# Uninstall SELinux module
+if command -v sestatus >/dev/null 2>&1 && sestatus | grep -q 'SELinux status:.*enabled'; then
+    # Check if the howdy module is installed
+    if semodule -l | grep -q howdy; then
+        # Remove the howdy SELinux policy module
+        semodule -d howdy
+    fi
+fi
 
 %files
 %license LICENSE
@@ -125,6 +155,7 @@ install -Dm 0644 howdy/src/dlib-data/*.dat -t %{buildroot}%{_datadir}/%{name}/dl
 %dir %{_sysconfdir}/%{name}/models/
 %config(noreplace) %{_sysconfdir}/%{name}/config.ini
 %config(noreplace) %{_sysconfdir}/profile.d/%{name}.*
+%{_datadir}/selinux/*/contexts/files/howdy.pp
 
 %files gtk
 %{_bindir}/%{name}-gtk
